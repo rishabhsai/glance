@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Glance</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -35,6 +36,7 @@
       about every UI element — role, label, value, exact pixel coordinates.
       No screenshots. No vision models. One function call.
     </p>
+
   </section>
 
   <!-- ============ NUMBERS ============ -->
@@ -58,13 +60,13 @@
     <div class="honest-card">
       <h3>Let's be real for a second.</h3>
       <p>
-        Glance doesn't replace screenshots entirely. <strong>About 70% of the time</strong> — when
+        Glance doesn't replace screenshots entirely. <strong>About 55% of the time</strong> — when
         your user is in a browser, text editor, terminal, or any standard productivity app —
         structured text is all your AI needs. It responds faster, costs less, and gets
         <em>exact</em> element positions instead of guessing from pixels.
       </p>
       <p>
-        The other 30%? Canvas apps, games, custom-rendered UIs — the accessibility tree is sparse
+        The other 45%? Canvas apps, games, custom-rendered UIs — the accessibility tree is sparse
         there. Fall back to screenshots for those. Glance tells you when to switch.
         <strong>Use the right tool for the moment.</strong>
       </p>
@@ -73,6 +75,28 @@
 
   <!-- ============ CODE ============ -->
   <section class="code-section">
+    <div class="agent-bar" id="agent-bar">
+      <span class="agent-icon">⌘</span>
+      <span class="agent-label">Or just tell your agent to set it up</span>
+      <button class="agent-copy" id="copy-agent">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        <span class="copy-label">Copy prompt</span>
+      </button>
+      <span id="agent-prompt-text" hidden>Integrate the Glance SDK (https://github.com/rishabhsai/glance) into this project. Glance is an open-source macOS SDK that reads the OS accessibility tree to give AI apps structured screen data — element roles, labels, values, and exact pixel coordinates — instead of sending screenshots to vision models. It's 10× faster and 30× cheaper.
+
+Install: npm install glance-sdk (JS), pip install glance-sdk (Python), or add as a Swift Package dependency.
+
+API (4 functions):
+- screen() → returns an LLM-ready text string with all UI elements and positions. Drop this into your prompt instead of a screenshot.
+- capture() → returns full structured JSON (app, window, elements array, metrics). Use capture().elementCount to decide whether to use text or fall back to screenshot.
+- find("element name") → returns exact pixel coordinates for that element. Use for cursor pointing.
+- checkAccess() → returns boolean for macOS Accessibility permission status.
+
+Fallback pattern: if capture().elementCount < 5, the user is in a canvas app or game — fall back to a screenshot for that interaction. Otherwise use the text output.
+
+Read the full docs and source at https://github.com/rishabhsai/glance</span>
+    </div>
+
     <div class="code-window">
       <div class="code-chrome">
         <div class="dots"><i></i><i></i><i></i></div>
@@ -205,7 +229,7 @@ print(state.elements.first?.center)
       <div class="works-card best">
         <div class="works-header">
           <span class="works-badge best-badge">Best for</span>
-          <span class="works-pct">~70% of use cases</span>
+          <span class="works-pct">~55% of use cases</span>
         </div>
         <p class="works-desc">Full element tree — every button, field, link, label, and its exact position. Text-only mode works perfectly here. This is where Glance saves you the most.</p>
         <ul>
@@ -251,12 +275,16 @@ print(state.elements.first?.center)
     <h2>Smart fallback, built in</h2>
     <p class="fallback-sub">Glance tells you when structured text isn't enough. One check, and you switch strategies automatically.</p>
 
-    <div class="code-window small-window">
+    <div class="code-window small-window fallback-code">
       <div class="code-chrome">
         <div class="dots"><i></i><i></i><i></i></div>
-        <span class="ow-label">adaptive mode</span>
+        <div class="code-tabs">
+          <button class="ct active" data-lang="js">index.js</button>
+          <button class="ct" data-lang="py">main.py</button>
+          <button class="ct" data-lang="swift">App.swift</button>
+        </div>
       </div>
-      <pre class="code-body"><code><span class="k">import</span> { capture } <span class="k">from</span> <span class="s">'glance-sdk'</span>
+      <pre class="code-body" data-lang="js"><code><span class="k">import</span> { capture } <span class="k">from</span> <span class="s">'glance-sdk'</span>
 
 <span class="k">const</span> state <span class="o">=</span> <span class="k">await</span> <span class="f">capture</span>()
 
@@ -267,6 +295,27 @@ print(state.elements.first?.center)
   <span class="c">// canvas app — fall back to screenshot</span>
   <span class="k">const</span> img <span class="o">=</span> <span class="k">await</span> <span class="f">captureScreenshot</span>()
   sendToLLM({ role: <span class="s">'user'</span>, content: [{ type: <span class="s">'image'</span>, data: img }] })
+}</code></pre>
+      <pre class="code-body hidden" data-lang="py"><code><span class="k">from</span> glance_sdk <span class="k">import</span> capture
+
+state <span class="o">=</span> <span class="f">capture</span>()
+
+<span class="k">if</span> state[<span class="s">"elementCount"</span>] <span class="o">></span> <span class="s">5</span>:
+    <span class="c"># rich structure — use text (10× faster, 30× cheaper)</span>
+    <span class="f">send_to_llm</span>(role<span class="o">=</span><span class="s">"user"</span>, content<span class="o">=</span>state[<span class="s">"prompt"</span>])
+<span class="k">else</span>:
+    <span class="c"># canvas app — fall back to screenshot</span>
+    img <span class="o">=</span> <span class="f">capture_screenshot</span>()
+    <span class="f">send_to_llm</span>(role<span class="o">=</span><span class="s">"user"</span>, content<span class="o">=</span>[{<span class="s">"type"</span>: <span class="s">"image"</span>, <span class="s">"data"</span>: img}])</code></pre>
+      <pre class="code-body hidden" data-lang="swift"><code><span class="k">let</span> state <span class="o">=</span> <span class="k">try</span> Glance.<span class="f">capture</span>()
+
+<span class="k">if</span> state.elementCount <span class="o">></span> <span class="s">5</span> {
+    <span class="c">// rich structure — use text (10× faster, 30× cheaper)</span>
+    <span class="f">sendToLLM</span>(role: <span class="s">"user"</span>, content: state.prompt)
+} <span class="k">else</span> {
+    <span class="c">// canvas app — fall back to screenshot</span>
+    <span class="k">let</span> img <span class="o">=</span> <span class="k">try await</span> <span class="f">captureScreenshot</span>()
+    <span class="f">sendToLLM</span>(role: <span class="s">"user"</span>, content: [.<span class="f">image</span>(img)])
 }</code></pre>
     </div>
 
@@ -379,6 +428,29 @@ print(state.elements.first?.center)
       <div class="ig-card">
         <h3>Any language</h3>
         <p>Use the CLI: <code>./glance screen --json</code> outputs structured JSON to stdout. Parse it from Go, Rust, Ruby — anything that can exec a process.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTRIBUTE ============ -->
+  <section class="contribute">
+    <h2>This is just the start</h2>
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <h3>Windows & Linux</h3>
+        <p>macOS uses AXUIElement. Windows has UI Automation, Linux has AT-SPI. Same idea, different OS APIs. We're working on it — or grab the issue and ship it first.</p>
+      </div>
+      <div class="contrib-card">
+        <h3>Smarter formatting</h3>
+        <p>The prompt formatter is good but not perfect. Better grouping, context-aware truncation, app-specific templates — lots of room to make the LLM output even tighter.</p>
+      </div>
+      <div class="contrib-card">
+        <h3>Diff mode</h3>
+        <p>Instead of sending the full screen every time, only send what changed since the last capture. Fewer tokens, faster responses, lower cost.</p>
+      </div>
+      <div class="contrib-card">
+        <h3>Your idea</h3>
+        <p>Open an issue, open a PR. This is MIT-licensed and built to be extended. If you're making an AI screen companion, you probably know what's missing better than we do.</p>
       </div>
     </div>
   </section>

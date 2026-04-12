@@ -129,7 +129,6 @@ nav {
   gap: 0;
   padding: 80px 32px;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
 }
 .number-item {
   flex: 1;
@@ -766,6 +765,95 @@ footer span:first-child {
 .reveal.visible {
   opacity: 1;
   transform: none;
+}
+
+/* ================================================
+   AGENT PROMPT BAR
+   ================================================ */
+.agent-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(94,234,212,0.12);
+}
+.agent-icon {
+  font-size: 13px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.agent-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+}
+.agent-copy {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 1px solid var(--accent-mid);
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 12px; font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.agent-copy:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+.agent-copy.copied .copy-label { }
+
+
+/* ================================================
+   CONTRIBUTE
+   ================================================ */
+.contribute {
+  padding: 100px 32px;
+  border-top: 1px solid var(--line);
+}
+.contribute h2 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 40px;
+}
+.contrib-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.contrib-card {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.contrib-card:hover {
+  border-color: var(--line2);
+  transform: translateY(-2px);
+}
+.contrib-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.contrib-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text2);
+}
+
+@media (max-width: 768px) {
+  .contrib-grid { grid-template-columns: 1fr; }
+  .agent-card { max-width: 100%; }
 }
 
 /* ================================================

@@ -1,13 +1,28 @@
+// ---- Agent prompt copy ----
+document.getElementById('copy-agent')?.addEventListener('click', () => {
+  const text = document.getElementById('agent-prompt-text').textContent
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-agent')
+    const label = btn.querySelector('.copy-label')
+    btn.classList.add('copied')
+    label.textContent = 'Copied!'
+    setTimeout(() => {
+      btn.classList.remove('copied')
+      label.textContent = 'Copy'
+    }, 2000)
+  })
+})
+
 // ---- Code tabs ----
 document.querySelectorAll('.ct').forEach(tab => {
   tab.addEventListener('click', () => {
     const lang = tab.dataset.lang
-    const root = tab.closest('section') || tab.closest('.code-window')
+    const win = tab.closest('.code-window')
 
-    root.querySelectorAll('.ct').forEach(t => t.classList.remove('active'))
+    win.querySelectorAll('.ct').forEach(t => t.classList.remove('active'))
     tab.classList.add('active')
 
-    root.querySelectorAll('.code-body').forEach(b => {
+    win.querySelectorAll('.code-body').forEach(b => {
       b.classList.toggle('hidden', b.dataset.lang !== lang)
     })
   })
@@ -50,8 +65,8 @@ function animateCounters() {
 // ---- Scroll reveal ----
 function setupReveal() {
   const els = document.querySelectorAll(
-    '.why-card, .ig-card, .install-card, .api-item, .works-card, ' +
-    '.speed-table, .latency-note, .output-window, .code-window, .honest-card'
+    '.why-card, .ig-card, .install-card, .api-item, .works-card, .contrib-card, ' +
+    '.speed-table, .latency-note, .output-window, .code-window, .honest-card, .agent-card'
   )
   els.forEach(el => el.classList.add('reveal'))
 

@@ -60,7 +60,7 @@
     <div class="honest-card">
       <h3>Let's be real for a second.</h3>
       <p>
-        Glance doesn't replace screenshots entirely. <strong>About 55% of the time</strong> — when
+        Glance doesn't replace screenshots entirely. <strong>About 45% of the time</strong> — when
         your user is in a browser, text editor, terminal, or any standard productivity app —
         structured text is all your AI needs. It responds faster, costs less, and gets
         <em>exact</em> element positions instead of guessing from pixels.
@@ -277,14 +277,14 @@ print(state.elements.first?.center)
       <div class="works-card best">
         <div class="works-header">
           <span class="works-badge best-badge">Best for</span>
-          <span class="works-pct">~55% of use cases</span>
+          <span class="works-pct">~45% of use cases</span>
         </div>
         <p class="works-desc">Full element tree — every button, field, link, label, and its exact position. Text-only mode works perfectly here. This is where Glance saves you the most.</p>
         <ul>
-          <li><strong>Browsers</strong> — Chrome, Safari, Firefox, Arc. Reads web page content too: headings, links, form fields, ARIA labels.</li>
           <li><strong>Code editors</strong> — VS Code, Cursor, Zed, Xcode. Sees file trees, tabs, editor content, terminal output.</li>
+          <li><strong>Terminals</strong> — Ghostty, iTerm2, Warp, Terminal.app. Tabs, buttons, text content all exposed.</li>
           <li><strong>Chat & productivity</strong> — Slack, Discord, Notion, Notes, Mail. Full message and UI structure.</li>
-          <li><strong>System apps</strong> — Finder, System Settings, Terminal, iTerm2, Warp. Everything exposed.</li>
+          <li><strong>System apps</strong> — Finder, System Settings, Activity Monitor. Everything exposed.</li>
           <li><strong>Electron apps</strong> — Any app built on Electron inherits Chromium's accessibility tree.</li>
         </ul>
       </div>
@@ -292,10 +292,11 @@ print(state.elements.first?.center)
       <div class="works-card mostly">
         <div class="works-header">
           <span class="works-badge mostly-badge">Works, with gaps</span>
-          <span class="works-pct">~20% of use cases</span>
+          <span class="works-pct">~30% of use cases</span>
         </div>
-        <p class="works-desc">Menus, toolbars, and panels are readable — but the main canvas or viewport is a single opaque element. Combine with a cropped screenshot of just the canvas area for best results.</p>
+        <p class="works-desc">Menus, toolbars, and panels are readable — but the main content area may be partially exposed. Combine with a screenshot for full context.</p>
         <ul>
+          <li><strong>Browsers</strong> — Chrome, Safari, Arc. Tabs, address bar, toolbar yes. Web content varies by site — well-structured ARIA sites work better.</li>
           <li><strong>DaVinci Resolve</strong> — color panels, timeline controls, menus yes. Video viewer no.</li>
           <li><strong>Adobe apps</strong> — toolbars, layers panel, menus yes. Artboard/canvas no.</li>
           <li><strong>Figma desktop</strong> — app chrome yes. Design canvas no.</li>
@@ -306,12 +307,13 @@ print(state.elements.first?.center)
       <div class="works-card fallback-card">
         <div class="works-header">
           <span class="works-badge fallback-badge">Use screenshot</span>
-          <span class="works-pct">~10% of use cases</span>
+          <span class="works-pct">~25% of use cases</span>
         </div>
-        <p class="works-desc">These render everything custom — no accessibility tree to read. Glance detects this automatically (elementCount will be very low) so you can switch to screenshots.</p>
+        <p class="works-desc">These render everything custom or have deep nested content — the accessibility tree is sparse or unreliable. Glance detects this automatically so you can switch to screenshots.</p>
         <ul>
-          <li>Games</li>
-          <li>Canvas / WebGL apps</li>
+          <li>Games and canvas apps</li>
+          <li>WebGL / custom-rendered UIs</li>
+          <li>Deep web page content</li>
           <li>Remote desktop streams</li>
         </ul>
       </div>

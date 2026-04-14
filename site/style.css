@@ -215,7 +215,7 @@ nav {
   scrollbar-width: none;
 }
 .code-body::-webkit-scrollbar { display: none; }
-.code-body.hidden { display: none; }
+.code-body.hidden, .output-body.hidden { display: none; }
 .code-body code {
   font-family: var(--mono);
   font-size: 13.5px;

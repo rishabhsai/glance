@@ -1,10 +1,11 @@
 {
   "name": "glance-sdk",
-  "version": "0.1.0",
-  "description": "Structured screen understanding for AI apps. Replace screenshots with instant, accurate UI data — 5x faster, 15x cheaper.",
+  "version": "0.1.1",
+  "description": "Structured screen understanding for AI apps. Replace screenshots with instant, accurate UI data — 10x faster, 30x cheaper.",
   "main": "index.js",
   "types": "index.d.ts",
   "license": "MIT",
+  "homepage": "https://glance.run",
   "keywords": [
     "ai",
     "screen",
@@ -27,6 +28,7 @@
   "files": [
     "index.js",
     "index.d.ts",
-    "bin/"
+    "bin/",
+    "README.md"
   ]
 }

@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+glance_sdk/__init__.py
+glance_sdk.egg-info/PKG-INFO
+glance_sdk.egg-info/SOURCES.txt
+glance_sdk.egg-info/dependency_links.txt
+glance_sdk.egg-info/top_level.txt
+glance_sdk/bin/glance

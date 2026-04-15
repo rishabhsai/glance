@@ -16,6 +16,10 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
 ]
 
+[project.urls]
+Homepage = "https://glance.run"
+Repository = "https://github.com/rishabhsai/glance"
+
 [tool.setuptools.packages.find]
 include = ["glance_sdk*"]
 
